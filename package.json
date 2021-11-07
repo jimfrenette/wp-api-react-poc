@@ -1,0 +1,16 @@
+{
+  "name": "webpack",
+  "description": "A Wordpress React plugin",
+  "version": "1.0.0",
+  "author": "",
+  "license": "1 GNU V2+, MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@wordpress/scripts": "^19.0.0"
+  }
+}
