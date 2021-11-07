@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP API React Proof of Concept
  * Plugin URL: http://jimfrenette.com/wordpress
- * Description: WordPress plugin to edit posts from the front end using the new REST API and React
+ * Description: WordPress plugin to edit posts from the front end using the WP REST API and React
  * Version: 1.0
  * Author: Jim Frenette
  * Author URI: http://jimfrenette.com
