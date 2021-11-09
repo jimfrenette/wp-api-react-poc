@@ -14,10 +14,11 @@ function Posts() {
     }, []);
 
     const fetchData = async (method = 'GET', post = null) => {
-        let params;
+        let body, params;
 
         if (post) {
             params = `${post.id}/?author=${wp_api_react_poc.current_user_id}&status=any`;
+            body = JSON.stringify(post);
         } else {
             params = `?author=${wp_api_react_poc.current_user_id}&status=any`;
         }
@@ -33,11 +34,13 @@ function Posts() {
                     'Content-Type': 'application/json',
                     'X-WP-Nonce': wp_api_react_poc.nonce
                 },
-                body: JSON.stringify(post)
+                body: body
             });
             const json = await response.json();
             if (method == 'GET') {
                 setPosts(json);
+            } else {
+                handleSubmitResponse();
             }
             setLoading(false);
         } catch (error) {
@@ -55,14 +58,20 @@ function Posts() {
             fetchData('PUT', {
                 id: postId,
                 title: postTitle,
-                content: postContent
+                content: postContent,
+                status: 'publish'
             });
         } else {
             fetchData('PUT', {
                 title: postTitle,
-                content: postContent
+                content: postContent,
+                status: 'publish'
             });
         }
+    }
+
+    function handleSubmitResponse(evt) {
+        fetchData();
     }
 
     function handleTitleChange(evt) {
@@ -71,6 +80,12 @@ function Posts() {
 
     function handleDeleteClick(evt) {
         fetchData('DELETE', {id: postId});
+    }
+
+    function handleNewPostClick(evt) {
+        setPostId(null);
+        setPostTitle(null);
+        setPostContent(null);
     }
 
     function handleTitleClick(evt, item) {
@@ -86,7 +101,7 @@ function Posts() {
             return (
                 <li>
                     <a html="#" onClick={(evt) => handleTitleClick(evt, item)}>{item.title.rendered}</a>
-                    <a href="#" title="DELETE" onClick={(evt) => handleDeleteClick(evt, item)}>[–]</a>
+                    <a href="#" title="DELETE" onClick={(evt) => handleDeleteClick(evt, item)}>[&ndash;]</a>
                 </li>
             )
         });
@@ -105,6 +120,9 @@ function Posts() {
                 <textarea rows="8" cols="20" defaultValue={postContent} onChange={(evt) => handleContentChange(evt)}></textarea>
             </div>
             <input type="submit" value="Submit" />
+            <span>
+                <a href="#" onClick={(evt) => handleNewPostClick(evt)}>New Post</a>
+            </span>
         </form>
         {content}
         </div>
