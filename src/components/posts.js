@@ -113,11 +113,11 @@ function Posts() {
         <form onSubmit={(evt) => handleSubmit(evt)}>
             <div>
                 <label>Title</label>
-                <input type="text" required="" aria-required="true" defaultValue={postTitle} onChange={(evt) => handleTitleChange(evt)}/>
+                <input type="text" required="" aria-required="true" defaultValue={postTitle || ''} onChange={(evt) => handleTitleChange(evt)}/>
             </div>
             <div>
                 <label>Content</label>
-                <textarea rows="8" cols="20" defaultValue={postContent} onChange={(evt) => handleContentChange(evt)}></textarea>
+                <textarea rows="8" cols="20" defaultValue={postContent || ''} onChange={(evt) => handleContentChange(evt)}></textarea>
             </div>
             <input type="submit" value="Submit" />
             <span>
