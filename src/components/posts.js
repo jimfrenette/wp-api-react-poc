@@ -13,12 +13,11 @@ function Posts() {
         fetchData();
     }, []);
 
-    const fetchData = async (method = 'GET', body = null) => {
+    const fetchData = async (method = 'GET', post = null) => {
         let params;
 
-        if (body) {
-            params = `${body.id}/?author=${wp_api_react_poc.current_user_id}&status=any`;
-            body = JSON.stringify(body);
+        if (post) {
+            params = `${post.id}/?author=${wp_api_react_poc.current_user_id}&status=any`;
         } else {
             params = `?author=${wp_api_react_poc.current_user_id}&status=any`;
         }
@@ -34,7 +33,7 @@ function Posts() {
                     'Content-Type': 'application/json',
                     'X-WP-Nonce': wp_api_react_poc.nonce
                 },
-                body: body
+                body: JSON.stringify(post)
             });
             const json = await response.json();
             if (method == 'GET') {
