@@ -1,4 +1,4 @@
-const { render, useState } = wp.element;
+const { render } = wp.element;
 
 import App from './app';
 
