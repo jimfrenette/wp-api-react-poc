@@ -1,5 +1,3 @@
-const { useState, useEffect } = wp.element;
-
 import Posts from './components/posts';
 
 function App() {
