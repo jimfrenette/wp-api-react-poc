@@ -17,7 +17,11 @@ function Posts() {
         let body, params;
 
         if (post) {
-            params = `${post.id}/?author=${wp_api_react_poc.current_user_id}&status=any`;
+            if (post.id) {
+                params = `${post.id}/?author=${wp_api_react_poc.current_user_id}&status=any`;
+            } else {
+                params = `?author=${wp_api_react_poc.current_user_id}&status=any`;
+            }
             body = JSON.stringify(post);
         } else {
             params = `?author=${wp_api_react_poc.current_user_id}&status=any`;
@@ -55,14 +59,14 @@ function Posts() {
     function handleSubmit(evt) {
         evt.preventDefault();
         if (postId) {
-            fetchData('PUT', {
+            fetchData('POST', {
                 id: postId,
                 title: postTitle,
                 content: postContent,
                 status: 'publish'
             });
         } else {
-            fetchData('PUT', {
+            fetchData('POST', {
                 title: postTitle,
                 content: postContent,
                 status: 'publish'
@@ -97,7 +101,7 @@ function Posts() {
     if (loading) {
         content = <div>Loading...</div>;
     } else {
-        list = posts.map((item, index) => {
+        list = posts.map((item) => {
             return (
                 <li>
                     <a html="#" onClick={(evt) => handleTitleClick(evt, item)}>{item.title.rendered}</a>
@@ -113,11 +117,11 @@ function Posts() {
         <form onSubmit={(evt) => handleSubmit(evt)}>
             <div>
                 <label>Title</label>
-                <input type="text" required="" aria-required="true" defaultValue={postTitle || ''} onChange={(evt) => handleTitleChange(evt)}/>
+                <input type="text" required="" aria-required="true" value={postTitle || ''} onChange={(evt) => handleTitleChange(evt)}/>
             </div>
             <div>
                 <label>Content</label>
-                <textarea rows="8" cols="20" defaultValue={postContent || ''} onChange={(evt) => handleContentChange(evt)}></textarea>
+                <textarea rows="8" cols="20" value={postContent || ''} onChange={(evt) => handleContentChange(evt)}></textarea>
             </div>
             <input type="submit" value="Submit" />
             <span>
